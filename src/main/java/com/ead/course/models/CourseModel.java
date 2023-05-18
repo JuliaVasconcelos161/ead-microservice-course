@@ -2,6 +2,9 @@ package com.ead.course.models;
 
 import com.ead.course.enums.CourseLevel;
 import com.ead.course.enums.CourseStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +13,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "TB_COURSES")
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CourseModel implements Serializable {
     private static final long SERIAL_VERSION_UID = 1L;
 
@@ -27,9 +32,11 @@ public class CourseModel implements Serializable {
     private String imageUrl;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyy HH:mm:ss")
     private LocalDateTime creationDate;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyy HH:mm:ss")
     private LocalDateTime lastUpdateDate;
 
     @Column(nullable = false)
