@@ -38,4 +38,9 @@ public class CourseServiceImpl implements CourseService {
         }
         repository.delete(courseModel);
     }
+
+    @Override
+    public CourseModel save(CourseModel courseModel) {
+        return repository.save(courseModel);
+    }
 }
