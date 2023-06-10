@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class CourseController {
     CourseService service;
 
     @PostMapping
-    public ResponseEntity<Object> saveCourse(@RequestBody CourseDto courseDto) {
+    public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDto courseDto) {
         var courseModel = new CourseModel();
         BeanUtils.copyProperties(courseDto, courseModel);
         courseModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
@@ -39,5 +40,19 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully.");
     }
 
-
+    @PutMapping("/{courseId}")
+    public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId") UUID courseId,
+                                               @RequestBody @Valid CourseDto courseDto) {
+        Optional<CourseModel> courseModelOptional = service.findById(courseId);
+        if(!courseModelOptional.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found");
+        var courseModel = courseModelOptional.get();
+        courseModel.setName(courseDto.getName());
+        courseModel.setDescription(courseDto.getDescription());
+        courseModel.setImageUrl(courseDto.getImageUrl());
+        courseModel.setCourseStatus(courseDto.getCourseStatus());
+        courseModel.setCourseLevel(courseDto.getCourseLevel());
+        courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
+        return ResponseEntity.status(HttpStatus.OK).body(service.save(courseModel));
+    }
 }
