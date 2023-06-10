@@ -2,9 +2,8 @@ package com.ead.course.controllers;
 
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.dtos.CourseDto;
-import com.ead.course.service.CourseService;
+import com.ead.course.service.impl.CourseServiceImpl;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +19,12 @@ import java.util.UUID;
 @RequestMapping("/courses")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseController {
-    @Autowired
-    CourseService service;
+
+    private final CourseServiceImpl service;
+
+    public CourseController(CourseServiceImpl service) {
+        this.service = service;
+    }
 
     @PostMapping
     public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDto courseDto) {
