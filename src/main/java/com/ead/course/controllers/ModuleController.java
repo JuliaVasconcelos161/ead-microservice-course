@@ -19,12 +19,12 @@ import java.util.UUID;
 @CrossOrigin(value = "*", maxAge = 3600)
 public class ModuleController {
 
-    private final ModuleService moduleService;
+    private final ModuleService service;
 
     private final CourseService courseService;
 
-    public ModuleController(ModuleService moduleService, CourseService courseService) {
-        this.moduleService = moduleService;
+    public ModuleController(ModuleService service, CourseService courseService) {
+        this.service = service;
         this.courseService = courseService;
     }
 
@@ -38,6 +38,17 @@ public class ModuleController {
         BeanUtils.copyProperties(moduleDto, moduleModel);
         moduleModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         moduleModel.setCourse(courseModelOptional.get());
-        return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.save(moduleModel))
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(moduleModel))
+    }
+
+    @DeleteMapping("/courses/{courseId}/modules/{moduleId}")
+    public ResponseEntity<Object> deleteModule(@PathVariable(value = "courseId") UUID courseId,
+                                               @PathVariable(value = "moduleId") UUID moduleId) {
+        Optional<ModuleModel> moduleModelOptional = service.findModuleIntoCourse(courseId, moduleId);
+        if(!moduleModelOptional.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
+        service.delete(moduleModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Module deleted successfully.");
+
     }
 }
