@@ -5,7 +5,6 @@ import com.ead.course.models.ModuleModel;
 import com.ead.course.models.dtos.ModuleDto;
 import com.ead.course.service.CourseService;
 import com.ead.course.service.ModuleService;
-import lombok.var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@RestController
 @CrossOrigin(value = "*", maxAge = 3600)
 public class ModuleController {
 
@@ -40,7 +40,7 @@ public class ModuleController {
         BeanUtils.copyProperties(moduleDto, moduleModel);
         moduleModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         moduleModel.setCourse(courseModelOptional.get());
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(moduleModel))
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(moduleModel));
     }
 
     @DeleteMapping("/courses/{courseId}/modules/{moduleId}")
