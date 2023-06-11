@@ -30,4 +30,9 @@ public class ModuleServiceImpl implements ModuleService {
             lessonRepository.deleteAll(lessonModelList);
         repository.delete(moduleModel);
     }
+
+    @Override
+    public ModuleModel save(ModuleModel moduleModel) {
+        return repository.save(moduleModel);
+    }
 }
