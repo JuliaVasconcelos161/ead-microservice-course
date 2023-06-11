@@ -5,6 +5,7 @@ import com.ead.course.models.ModuleModel;
 import com.ead.course.models.dtos.ModuleDto;
 import com.ead.course.service.CourseService;
 import com.ead.course.service.ModuleService;
+import lombok.var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,5 +51,18 @@ public class ModuleController {
         service.delete(moduleModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Module deleted successfully.");
 
+    }
+
+    @PutMapping("/courses/{courseId}/modules/{moduleId}")
+    public ResponseEntity<Object> updateModule(@PathVariable(value = "courseId") UUID courseId,
+                                               @PathVariable(value = "moduleId") UUID moduleId,
+                                               @RequestBody @Valid ModuleDto moduleDto) {
+        Optional<ModuleModel> moduleModelOptional = service.findModuleIntoCourse(courseId, moduleId);
+        if(!moduleModelOptional.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course.");
+        var moduleModel = moduleModelOptional.get();
+        moduleModel.setTitle(moduleDto.getTitle());
+        moduleModel.setDescription(moduleDto.getDescription());
+        return ResponseEntity.status(HttpStatus.OK).body(service.save(moduleModel));
     }
 }
