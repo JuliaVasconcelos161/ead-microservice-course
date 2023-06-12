@@ -7,22 +7,26 @@ import com.ead.course.repository.CourseRepository;
 import com.ead.course.repository.LessonRepository;
 import com.ead.course.repository.ModuleRepository;
 import com.ead.course.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-    @Autowired
-    private CourseRepository repository;
+    private final CourseRepository repository;
 
-    @Autowired
-    ModuleRepository moduleRepository;
+    private final ModuleRepository moduleRepository;
 
-    @Autowired
-    LessonRepository lessonRepository;
+    private final LessonRepository lessonRepository;
+
+    public CourseServiceImpl(CourseRepository repository, ModuleRepository moduleRepository, LessonRepository lessonRepository) {
+        this.repository = repository;
+        this.moduleRepository = moduleRepository;
+        this.lessonRepository = lessonRepository;
+    }
 
     @Transactional
     @Override
@@ -37,5 +41,20 @@ public class CourseServiceImpl implements CourseService {
             moduleRepository.deleteAll(moduleModelList);
         }
         repository.delete(courseModel);
+    }
+    @Transactional
+    @Override
+    public CourseModel save(CourseModel courseModel) {
+        return repository.save(courseModel);
+    }
+
+    @Override
+    public Optional<CourseModel> findById(UUID courseId) {
+        return repository.findById(courseId);
+    }
+
+    @Override
+    public List<CourseModel> findAll() {
+        return repository.findAll();
     }
 }
