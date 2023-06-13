@@ -3,6 +3,7 @@ package com.ead.course.controllers;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.models.dtos.LessonDto;
+import com.ead.course.models.dtos.ModuleDto;
 import com.ead.course.service.LessonService;
 import com.ead.course.service.ModuleService;
 import org.springframework.beans.BeanUtils;
@@ -44,11 +45,27 @@ public class LessonController {
     @DeleteMapping("/modules/{moduleId}/lessons/{lessonId}")
     public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId") UUID moduleId,
                                                @PathVariable(value = "lessonId") UUID lessonId) {
-        Optional<LessonModel> lessonModelOptional = service.findModuleIntoCourse(moduleId, lessonId);
+        Optional<LessonModel> lessonModelOptional = service.findLessonIntoModule(moduleId, lessonId);
         if(!lessonModelOptional.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
         service.delete(lessonModelOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Lesson deleted successfully.");
 
     }
+
+    @PutMapping("/modules/{moduleId}/lessons/{lessonId}")
+    public ResponseEntity<Object> updateLesson(@PathVariable(value = "moduleId") UUID moduleId,
+                                               @PathVariable(value = "lessonId") UUID lessonId,
+                                               @RequestBody @Valid LessonDto lessonDto) {
+        Optional<LessonModel> lessonModelOptional = service.findLessonIntoModule(moduleId, lessonId);
+        if(!lessonModelOptional.isPresent())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
+        var lessonModel = new LessonModel();
+        lessonModel.setTitle(lessonDto.getTitle());
+        lessonModel.setDescription(lessonDto.getDescription());
+        lessonModel.setVideoUrl(lessonDto.getVideoUrl());
+        return ResponseEntity.status(HttpStatus.OK).body(service.save(lessonModel));
+    }
+
+
 }
