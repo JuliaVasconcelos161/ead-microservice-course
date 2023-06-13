@@ -3,7 +3,6 @@ package com.ead.course.controllers;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.models.dtos.LessonDto;
-import com.ead.course.models.dtos.ModuleDto;
 import com.ead.course.service.LessonService;
 import com.ead.course.service.ModuleService;
 import org.springframework.beans.BeanUtils;
@@ -61,7 +60,7 @@ public class LessonController {
         Optional<LessonModel> lessonModelOptional = service.findLessonIntoModule(moduleId, lessonId);
         if(!lessonModelOptional.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
-        var lessonModel = new LessonModel();
+        var lessonModel = lessonModelOptional.get();
         lessonModel.setTitle(lessonDto.getTitle());
         lessonModel.setDescription(lessonDto.getDescription());
         lessonModel.setVideoUrl(lessonDto.getVideoUrl());
