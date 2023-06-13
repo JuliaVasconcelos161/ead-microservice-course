@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,7 +44,7 @@ public class LessonController {
     }
 
     @DeleteMapping("/modules/{moduleId}/lessons/{lessonId}")
-    public ResponseEntity<Object> deleteModule(@PathVariable(value = "moduleId") UUID moduleId,
+    public ResponseEntity<Object> deleteLesson(@PathVariable(value = "moduleId") UUID moduleId,
                                                @PathVariable(value = "lessonId") UUID lessonId) {
         Optional<LessonModel> lessonModelOptional = service.findLessonIntoModule(moduleId, lessonId);
         if(!lessonModelOptional.isPresent())
@@ -67,5 +68,8 @@ public class LessonController {
         return ResponseEntity.status(HttpStatus.OK).body(service.save(lessonModel));
     }
 
-
+    @GetMapping("/modules/{moduleId}/lessons")
+    public ResponseEntity<List<LessonModel>> getAllLessons(@PathVariable(value = "moduleId") UUID moduleId) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.findAllByModule(moduleId));
+    }
 }
