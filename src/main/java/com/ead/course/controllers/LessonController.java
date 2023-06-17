@@ -47,7 +47,7 @@ public class LessonController {
         lessonModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         lessonModel.setModule(moduleModelOptional.get());
         service.save(lessonModel);
-        log.debug("POST saveLesson lessonModel saved {}", lessonModel.toString());
+        log.debug("POST saveLesson lessonId saved {}", lessonModel.getLessonId());
         log.info("Lesson saved successfully lessonId {}", lessonModel.getLessonId());
         return ResponseEntity.status(HttpStatus.CREATED).body(lessonModel);
     }
@@ -81,7 +81,7 @@ public class LessonController {
         lessonModel.setDescription(lessonDto.getDescription());
         lessonModel.setVideoUrl(lessonDto.getVideoUrl());
         service.save(lessonModel);
-        log.debug("PUT updateLesson lessonModel saved {}", lessonModel.toString());
+        log.debug("PUT updateLesson lessonId saved {}", lessonModel.getLessonId());
         log.info("Lesson updated successfully lessonId {}", lessonModel.getLessonId());
         return ResponseEntity.status(HttpStatus.OK).body(lessonModel);
     }
