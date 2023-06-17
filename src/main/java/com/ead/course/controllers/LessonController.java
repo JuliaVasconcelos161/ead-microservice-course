@@ -59,6 +59,7 @@ public class LessonController {
         Optional<LessonModel> lessonModelOptional = service.findLessonIntoModule(moduleId, lessonId);
         if(!lessonModelOptional.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
+
         service.delete(lessonModelOptional.get());
         log.debug("DELETE deleteLesson lessonId saved {}", lessonId);
         log.info("Lesson delete successfully lessonId {}", lessonId);
@@ -74,6 +75,7 @@ public class LessonController {
         Optional<LessonModel> lessonModelOptional = service.findLessonIntoModule(moduleId, lessonId);
         if(!lessonModelOptional.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
+
         var lessonModel = lessonModelOptional.get();
         lessonModel.setTitle(lessonDto.getTitle());
         lessonModel.setDescription(lessonDto.getDescription());
@@ -99,6 +101,7 @@ public class LessonController {
         Optional<LessonModel> lessonModelOptional = service.findLessonIntoModule(moduleId, lessonId);
         if(!lessonModelOptional.isPresent())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lesson not found for this module.");
+
         return ResponseEntity.status(HttpStatus.OK).body(lessonModelOptional.get());
     }
 }
