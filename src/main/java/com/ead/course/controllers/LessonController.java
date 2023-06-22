@@ -5,7 +5,7 @@ import com.ead.course.models.ModuleModel;
 import com.ead.course.models.dtos.LessonDto;
 import com.ead.course.service.LessonService;
 import com.ead.course.service.ModuleService;
-import com.ead.course.specifications.Specification;
+import com.ead.course.specifications.SpecificationTemplate;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
@@ -88,11 +88,11 @@ public class LessonController {
 
     @GetMapping("/modules/{moduleId}/lessons")
     public ResponseEntity<Page<LessonModel>> getAllLessons(@PathVariable(value = "moduleId") UUID moduleId,
-                                                           Specification.LessonSpec spec,
+                                                           SpecificationTemplate.LessonSpec spec,
                                                            @PageableDefault(page = 0, size = 10, sort = "lessonId",
                                                                    direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(service.findAllByModule(Specification.lessonModuleId(moduleId).and(spec), pageable));
+                .body(service.findAllByModule(SpecificationTemplate.lessonModuleId(moduleId).and(spec), pageable));
     }
 
     @GetMapping("/modules/{moduleId}/lessons/{lessonId}")
