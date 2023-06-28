@@ -2,6 +2,7 @@ package com.ead.course.client;
 
 import com.ead.course.models.dtos.ResponsePageDto;
 import com.ead.course.models.dtos.UserDto;
+import com.ead.course.service.UtilsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -21,8 +22,11 @@ public class CourseClient {
 
     private final RestTemplate restTemplate;
 
-    public CourseClient(RestTemplate restTemplate) {
+    private final UtilsService utilsService;
+
+    public CourseClient(RestTemplate restTemplate, UtilsService utilsService) {
         this.restTemplate = restTemplate;
+        this.utilsService = utilsService;
     }
 
     public Page<UserDto> getAllUsersByCourse(UUID courseId, Pageable pageable) {
