@@ -3,10 +3,11 @@ package com.ead.course.client;
 import com.ead.course.models.dtos.ResponsePageDto;
 import com.ead.course.models.dtos.UserDto;
 import com.ead.course.service.UtilsService;
+
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class CourseClient {
 
     private final UtilsService utilsService;
 
+    @Value("${ead.api.url.authuser}")
+    private String REQUEST_URI_AUTHUSER;
+
     public CourseClient(RestTemplate restTemplate, UtilsService utilsService) {
         this.restTemplate = restTemplate;
         this.utilsService = utilsService;
@@ -32,7 +36,7 @@ public class CourseClient {
     public Page<UserDto> getAllUsersByCourse(UUID courseId, Pageable pageable) {
         List<UserDto> searchResult = null;
         ResponseEntity<ResponsePageDto<UserDto>> result = null;
-        String urlString = utilsService.createUrl(courseId, pageable);
+        String urlString = REQUEST_URI_AUTHUSER + utilsService.createUrlGetAllUsersByCourse(courseId, pageable);
         log.debug("Request Url: {} ", urlString);
         log.info("Request Url: {} ", urlString);
         try{
