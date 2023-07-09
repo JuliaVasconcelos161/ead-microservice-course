@@ -9,6 +9,7 @@ import java.util.UUID;
 @Service
 public class UtilsServiceImpl implements UtilsService {
 
+    @Override
     public String createUrlGetAllUsersByCourse(UUID courseId, Pageable pageable) {
         StringBuilder url =  new StringBuilder();
         url.append("/users?courseId=");
@@ -19,6 +20,14 @@ public class UtilsServiceImpl implements UtilsService {
         url.append(pageable.getPageSize());
         url.append("&sort=");
         url.append(pageable.getSort().toString().replaceAll(": ", ","));
+        return url.toString();
+    }
+
+    @Override
+    public String createUrlGetOneUserById(UUID userId) {
+        StringBuilder url =  new StringBuilder();
+        url.append("/users/");
+        url.append(userId);
         return url.toString();
     }
 }

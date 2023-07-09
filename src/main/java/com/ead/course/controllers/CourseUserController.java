@@ -1,6 +1,6 @@
 package com.ead.course.controllers;
 
-import com.ead.course.client.CourseClient;
+import com.ead.course.client.AuthuserClient;
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.CourseUserModel;
 import com.ead.course.models.dtos.SubscriptionDto;
@@ -25,14 +25,14 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseUserController {
 
-    private final CourseClient courseClient;
+    private final AuthuserClient authuserClient;
 
     private final CourseService courseService;
 
     private final CourseUserService courseUserService;
 
-    public CourseUserController(CourseClient courseClient, CourseService courseService, CourseUserService courseUserService) {
-        this.courseClient = courseClient;
+    public CourseUserController(AuthuserClient authuserClient, CourseService courseService, CourseUserService courseUserService) {
+        this.authuserClient = authuserClient;
         this.courseService = courseService;
         this.courseUserService = courseUserService;
     }
@@ -41,7 +41,7 @@ public class CourseUserController {
     public ResponseEntity<Page<UserDto>> getAllUsersByCourse(
             @PageableDefault(page = 0, size = 10, sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
             @PathVariable(value = "courseId") UUID courseId) {
-        return ResponseEntity.status(HttpStatus.OK).body(courseClient.getAllUsersByCourse(courseId, pageable));
+        return ResponseEntity.status(HttpStatus.OK).body(authuserClient.getAllUsersByCourse(courseId, pageable));
     }
 
     @PostMapping("/courses/{courseId}/users/subscription")

@@ -19,16 +19,16 @@ import java.util.List;
 import java.util.UUID;
 @Log4j2
 @Component
-public class CourseClient {
+public class AuthuserClient {
 
     private final RestTemplate restTemplate;
 
     private final UtilsService utilsService;
 
     @Value("${ead.api.url.authuser}")
-    private String REQUEST_URI_AUTHUSER;
+    private String REQUEST_URL_AUTHUSER;
 
-    public CourseClient(RestTemplate restTemplate, UtilsService utilsService) {
+    public AuthuserClient(RestTemplate restTemplate, UtilsService utilsService) {
         this.restTemplate = restTemplate;
         this.utilsService = utilsService;
     }
@@ -36,7 +36,7 @@ public class CourseClient {
     public Page<UserDto> getAllUsersByCourse(UUID courseId, Pageable pageable) {
         List<UserDto> searchResult = null;
         ResponseEntity<ResponsePageDto<UserDto>> result = null;
-        String urlString = REQUEST_URI_AUTHUSER + utilsService.createUrlGetAllUsersByCourse(courseId, pageable);
+        String urlString = REQUEST_URL_AUTHUSER + utilsService.createUrlGetAllUsersByCourse(courseId, pageable);
         log.debug("Request Url: {} ", urlString);
         log.info("Request Url: {} ", urlString);
         try{
@@ -50,5 +50,10 @@ public class CourseClient {
         }
         log.info("Ending request /users courseId {} ", courseId);
         return result.getBody();
+    }
+
+    public ResponseEntity<UserDto> getOneUserById(UUID userId) {
+        String url = REQUEST_URL_AUTHUSER + utilsService.createUrlGetOneUserById(userId);
+
     }
 }
