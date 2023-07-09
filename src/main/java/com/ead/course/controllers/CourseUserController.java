@@ -2,6 +2,7 @@ package com.ead.course.controllers;
 
 import com.ead.course.client.CourseClient;
 import com.ead.course.models.CourseModel;
+import com.ead.course.models.CourseUserModel;
 import com.ead.course.models.dtos.SubscriptionDto;
 import com.ead.course.models.dtos.UserDto;
 import com.ead.course.service.CourseService;
@@ -55,6 +56,7 @@ public class CourseUserController {
 
         //verificação user
 
-
+        CourseUserModel courseUserModel = courseUserService.save(courseModelOptional.get().convertToCourseUserModel(subscriptionDto.getUserId()));
+        return ResponseEntity.status(HttpStatus.CREATED).body("Subscription created successfully.");
     }
 }

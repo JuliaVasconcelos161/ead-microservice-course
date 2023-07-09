@@ -1,6 +1,7 @@
 package com.ead.course.service.impl;
 
 import com.ead.course.models.CourseModel;
+import com.ead.course.models.CourseUserModel;
 import com.ead.course.repository.CourseUserRepository;
 import com.ead.course.service.CourseUserService;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,10 @@ public class CourseUserServiceImpl implements CourseUserService {
     @Override
     public boolean existsByCourseAndUserId(CourseModel courseModel, UUID userId) {
         return repository.existsByCourseAndUserId(courseModel, userId);
+    }
+
+    @Override
+    public CourseUserModel save(CourseUserModel courseUserModel) {
+        return repository.save(courseUserModel);
     }
 }
