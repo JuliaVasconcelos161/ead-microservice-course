@@ -54,6 +54,6 @@ public class AuthuserClient {
 
     public ResponseEntity<UserDto> getOneUserById(UUID userId) {
         String url = REQUEST_URL_AUTHUSER + utilsService.createUrlGetOneUserById(userId);
-
+        return restTemplate.exchange(url, HttpMethod.GET, null, UserDto.class);
     }
 }
