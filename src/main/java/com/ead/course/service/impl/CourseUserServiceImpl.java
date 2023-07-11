@@ -37,6 +37,6 @@ public class CourseUserServiceImpl implements CourseUserService {
     public CourseUserModel saveAndSendSubscriptionUserInCourse(CourseUserModel courseUserModel) {
         courseUserModel = repository.save(courseUserModel);
         authuserClient.postSubscriptionUserInCourse(courseUserModel.getCourse().getCourseId(), courseUserModel.getUserId());
-        return null;
+        return courseUserModel;
     }
 }
