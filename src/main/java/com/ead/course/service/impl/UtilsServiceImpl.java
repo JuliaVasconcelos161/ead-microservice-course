@@ -30,4 +30,13 @@ public class UtilsServiceImpl implements UtilsService {
         url.append(userId);
         return url.toString();
     }
+
+    @Override
+    public String createUrlPostSubscriptionUserInCourse(UUID userId) {
+        StringBuilder url =  new StringBuilder();
+        url.append("/users/");
+        url.append(userId);
+        url.append("/courses/subscription");
+        return url.toString();
+    }
 }
