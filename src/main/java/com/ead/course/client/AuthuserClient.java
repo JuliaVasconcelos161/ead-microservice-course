@@ -59,5 +59,6 @@ public class AuthuserClient {
 
     public void postSubscriptionUserInCourse(UUID courseId, UUID userId) {
         String url = REQUEST_URL_AUTHUSER + utilsService.createUrlPostSubscriptionUserInCourse(userId);
+
     }
 }
