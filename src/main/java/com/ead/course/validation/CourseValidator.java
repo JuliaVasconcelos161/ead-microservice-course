@@ -36,6 +36,7 @@ public class CourseValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         CourseDto courseDto = (CourseDto) o;
+        validator.validate(courseDto, errors);
         if(!errors.hasErrors())
             validateUserInstructor(courseDto.getUserInstructor(), errors);
 
