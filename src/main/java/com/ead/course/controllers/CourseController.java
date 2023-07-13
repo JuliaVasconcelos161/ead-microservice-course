@@ -33,7 +33,7 @@ public class CourseController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseDto courseDto) {
+    public ResponseEntity<Object> saveCourse(@RequestBody CourseDto courseDto) {
         log.debug("POST saveCourse courseDto received {}", courseDto.toString());
         var courseModel = new CourseModel();
         BeanUtils.copyProperties(courseDto, courseModel);
