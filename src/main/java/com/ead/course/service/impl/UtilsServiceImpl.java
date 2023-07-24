@@ -39,4 +39,12 @@ public class UtilsServiceImpl implements UtilsService {
         url.append("/courses/subscription");
         return url.toString();
     }
+
+    @Override
+    public String createUrlDeleteCourseInAuthuser(UUID courseId) {
+        StringBuilder url =  new StringBuilder();
+        url.append("/users/courses/");
+        url.append(courseId);
+        return url.toString();
+    }
 }

@@ -11,4 +11,6 @@ public interface UtilsService {
     String createUrlGetOneUserById(UUID userId);
 
     String createUrlPostSubscriptionUserInCourse(UUID userId);
+
+    String createUrlDeleteCourseInAuthuser(UUID courseId);
 }
