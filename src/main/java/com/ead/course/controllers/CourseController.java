@@ -4,7 +4,6 @@ import com.ead.course.models.CourseModel;
 import com.ead.course.models.dtos.CourseDto;
 import com.ead.course.service.impl.CourseServiceImpl;
 import com.ead.course.specifications.SpecificationTemplate;
-
 import com.ead.course.validation.CourseValidator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
@@ -93,10 +92,6 @@ public class CourseController {
                                                            @PageableDefault(page = 0, size = 10, sort = "courseId",
                                                                    direction = Sort.Direction.ASC) Pageable pageable,
                                                            @RequestParam(required = false) UUID userId) {
-        if(userId != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(service.findAll(SpecificationTemplate.courseUserId(userId),
-                    pageable));
-        }
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll(spec, pageable));
     }
 
