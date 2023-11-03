@@ -3,24 +3,24 @@ package com.ead.course.models.dtos;
 import java.util.UUID;
 
 public class NotificationCommandDto {
-    private String titulo;
-    private String messsage;
+    private String title;
+    private String message;
     private UUID userId;
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getMesssage() {
-        return messsage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMesssage(String messsage) {
-        this.messsage = messsage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public UUID getUserId() {
