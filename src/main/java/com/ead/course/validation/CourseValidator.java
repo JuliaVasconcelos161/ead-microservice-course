@@ -53,19 +53,9 @@ public class CourseValidator implements Validator {
         Optional<UserModel> userModelOptional = userService.findById(userInstructor);
         if(!userModelOptional.isPresent())
             errors.rejectValue("userInstructor", "UserInstructorError", "Instructor not found.");
-        if(userModelOptional.get().getUserType().equals(UserType.STUDENT.toString()))
+        else if(userModelOptional.get().getUserType().equals(UserType.STUDENT.toString())
+                || userModelOptional.get().getUserType().equals(UserType.USER.toString()))
             errors.rejectValue("userInstructor","UserInstructorError", "User must be INSTRUCTOR or ADMIN.");
-//
     }
-//        ResponseEntity<UserDto> responseUserInstructor;
-//        try {
-//            responseUserInstructor = authuserClient.getOneUserById(userInstructor);
-//            if(responseUserInstructor.getBody().getUserType().equals(UserType.STUDENT))
-//                errors.rejectValue("userInstructor","UserInstructorError", "User must be INSTRUCTOR or ADMIN.");
-//        }catch(HttpStatusCodeException e) {
-//            if(e.getStatusCode().equals(HttpStatus.NOT_FOUND))
-//                errors.rejectValue("userInstructor", "UserInstructorError", "Instructor not found");
-//
-//        }
-//    }
+
 }
